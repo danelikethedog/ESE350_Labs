@@ -18,6 +18,14 @@ ISR(TIMER1_COMPA_vect) {
 int freqCalc(int inHertz) {
 	return (1/inHertz)*16*100000;
 }
+char* getArgument() {
+	char* retVal[8];
+	scanf("%s", &retVal);
+	
+	return retVal;
+	
+	
+}
 
 int main(void) {
 
@@ -36,7 +44,7 @@ int main(void) {
 	OCR1A = TCNT1 + 16;
 
 	sei();
-
+	printf(getArgument());
 	while(1);
 
 }
