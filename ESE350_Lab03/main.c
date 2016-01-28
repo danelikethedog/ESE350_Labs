@@ -6,7 +6,8 @@
 
 
 //OC1A used as PB1
-int HiOrLo, stallTime;
+int HiOrLo;
+long stallTime;
  
 
 ISR(TIMER1_COMPA_vect) {
@@ -15,8 +16,11 @@ ISR(TIMER1_COMPA_vect) {
 
 }
 
-int freqCalc(int inHertz) {
-	return (1/inHertz)*16*100000;
+float freqCalc(int inHertz) {
+	float top, bottom;
+	top = 1/inHertz;
+	bottom = 1/16000000;
+	return top/bottom;
 }
 char* getArgument() {
 	char* retVal[8];
@@ -29,7 +33,7 @@ char* getArgument() {
 
 int main(void) {
 
-	stallTime = 18073;
+	//stallTime = 18073;
 
 	DDRB |= 0xFF;
 
@@ -42,6 +46,10 @@ int main(void) {
 	TIMSK1 = 0x02;
 
 	OCR1A = TCNT1 + 16;
+
+	stallTime = freqCalc(1000)/2;
+
+	
 
 	sei();
 	printf(getArgument());
