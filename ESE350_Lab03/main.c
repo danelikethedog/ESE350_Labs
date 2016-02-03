@@ -2,12 +2,18 @@
 #include <avr/interrupt.h>
 #include "util/delay.h" 
 #include <stdio.h>
+#include <stdlib.h>
 #include "uart.h"
 
 
 //OC1A used as PB1
 int HiOrLo;
 long unsigned stallTime;
+char next_char;
+int iterate;
+char first[8];
+char second[8];
+char *charHolder;
  
 
 ISR(TIMER1_COMPA_vect) {
@@ -16,19 +22,10 @@ ISR(TIMER1_COMPA_vect) {
 
 }
 
-long freqCalc(int inHertz) {
+long freqCalc(long inHertz) {
+	return 16000000/inHertz;
+}
 
-	int unsigned top = inHertz;
-	return 16000000/top;
-}
-char* getArgument() {
-	char* retVal[8];
-	scanf("%s", &retVal);
-	
-	return retVal;
-	
-	
-}
 
 int main(void) {
 
@@ -48,16 +45,34 @@ int main(void) {
 
 	OCR1A = TCNT1 + 16;
 
-	stallTime = freqCalc(1200)/2;
+	//Get the first number, break on space, and get the second number
+	scanf("%s", &first);
+	scanf("%s", &second);
 
 
+	printf("First: %s\n", first);
+	printf("Second: %s\n", second);
 
-	
+	//Convert the strings collected to longs
+	long unsigned freqInput = strtol(&first, NULL, 10);
+	long unsigned durationInput = strtol(&second, NULL, 10);
+
+	//Test print statements for the input freq and duration
+	printf("Freq: %i\n", freqInput);
+	printf("Dur: %i", durationInput);
+
+	//Calculate the stall time
+	stallTime = freqCalc(freqInput)/2;
+
+	printf("StallTime: %lu\n", stallTime);
+
 
 	sei();
-	//printf(getArgument());
+
+
+
 	while(1) {
-		//printf("%lu\n", stallTime);
+
 	}
 
 }
