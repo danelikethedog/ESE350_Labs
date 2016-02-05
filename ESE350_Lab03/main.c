@@ -33,21 +33,48 @@ Need to create a while loop for while key is depressed in each if statement
 or branch to helper function and play out frequency on OC1A and OC1B.
 */
 
+long freqCalc(long inHertz) {
+	return 16000000/(2*inHertz);
+}
+
 
 ISR(TIMER2_COMPA_vect) {
 	if (rowHolder == 1) {
 
 		if (PIND & 0x04) {
 			keyPress = '1';
+
+			TIMSK1 |= 0x06;
+
+			rowStallTime = freqCalc(Freq1R);
+			columnStallTime = freqCalc(Freq1C);
+			
 			//printf("1");
 		} else if (PIND & 0x08) {
 			keyPress = '2';
+
+			TIMSK1 |= 0x06;
+
+			rowStallTime = freqCalc(Freq1R);
+			columnStallTime = freqCalc(Freq2C);
+
+
 			//printf("2");
 		} else if (PIND & 0x10) {
 			keyPress = '3';
+
+			TIMSK1 |= 0x06;
+
+			rowStallTime = freqCalc(Freq1R);
+			columnStallTime = freqCalc(Freq3C);
 			//printf("3");
 		} else if (PIND & 0x20) {
 			keyPress = 'A';
+
+			TIMSK1 |= 0x06;
+
+			rowStallTime = freqCalc(Freq1R);
+			columnStallTime = freqCalc(FreqAC);
 			//printf("A");
 		}
 
@@ -63,15 +90,29 @@ ISR(TIMER2_COMPA_vect) {
 
 		if (PIND & 0x04) {
 			keyPress = '4';
+
+			TIMSK1 |= 0x06;
+
+			rowStallTime = freqCalc(Freq4R);
+			columnStallTime = freqCalc(Freq1C);
 			//printf("4");
 		} else if (PIND & 0x08) {
 			keyPress = '5';
+
+			rowStallTime = freqCalc(Freq4R);
+			columnStallTime = freqCalc(Freq2C);
 			//printf("5");
 		} else if (PIND & 0x10) {
 			keyPress = '6';
+
+			rowStallTime = freqCalc(Freq4R);
+			columnStallTime = freqCalc(Freq3C);
 			//printf("6");
 		} else if (PIND & 0x20) {
 			keyPress = 'B';
+
+			rowStallTime = freqCalc(Freq4R);
+			columnStallTime = freqCalc(FreqAC);
 			//printf("B");
 		}
 
@@ -88,15 +129,27 @@ ISR(TIMER2_COMPA_vect) {
 
 		if (PIND & 0x04) {
 			keyPress = '7';
+
+			rowStallTime = freqCalc(Freq7R);
+			columnStallTime = freqCalc(Freq1C);
 			//printf("7");
 		} else if (PIND & 0x08) {
 			keyPress = '8';
+
+			rowStallTime = freqCalc(Freq7R);
+			columnStallTime = freqCalc(Freq2C);
 			//printf("8");
 		} else if (PIND & 0x10) {
 			keyPress = '9';
+
+			rowStallTime = freqCalc(Freq7R);
+			columnStallTime = freqCalc(Freq3C);
 			//printf("9");
 		} else if (PIND & 0x20) {
 			keyPress = 'C';
+
+			rowStallTime = freqCalc(Freq7R);
+			columnStallTime = freqCalc(FreqAC);
 			//printf("C");
 		}
 
@@ -112,15 +165,27 @@ ISR(TIMER2_COMPA_vect) {
 
 		if (PIND & 0x04) {
 			keyPress = '*';
+
+			rowStallTime = freqCalc(FreqStarR);
+			columnStallTime = freqCalc(Freq1C);
 			//printf("*");
 		} else if (PIND & 0x08) {
 			keyPress = '0';
+
+			rowStallTime = freqCalc(FreqStarR);
+			columnStallTime = freqCalc(Freq2C);
 			//printf("0");
 		} else if (PIND & 0x10) {
 			keyPress = '#';
+
+			rowStallTime = freqCalc(FreqStarR);
+			columnStallTime = freqCalc(Freq3C);
 			//printf("#");
 		} else if (PIND & 0x20) {
 			keyPress = 'D';
+
+			rowStallTime = freqCalc(FreqStarR);
+			columnStallTime = freqCalc(FreqAC);
 			//printf("D");
 		}
 
@@ -130,7 +195,11 @@ ISR(TIMER2_COMPA_vect) {
 		PORTC &= ~(1 << PC3);
 		PORTC &= ~(1 << PC4);
 		PORTC &= ~(1 << PC5);
+	} else {
+		TIMSK1 &= ~(0x06);
 	}
+
+	
 
 }
 
@@ -146,9 +215,7 @@ ISR(TIMER1_COMPB_vect) {
 
 }
 
-long freqCalc(long inHertz) {
-	return 16000000/inHertz;
-}
+
 
 
 int main(void) {
@@ -173,13 +240,14 @@ int main(void) {
 
 
 	//Timer 1 Config
-	TCCR1A = 0x40;
+	TCCR1A = 0x50;
 
 	TCCR1B = 0x01;
 
-	TIMSK1 = 0x02;
+	TIMSK1 = 0x00;
 
 	OCR1A = TCNT1 + 16;
+	OCR1B = TCNT1 + 16;
 
 
 	//Timer 2 Config
@@ -189,6 +257,7 @@ int main(void) {
 	TIMSK2 |= 0x02;
 	OCR2A = 0xFF;
 
+/*
 
 	//Get the first number, break on space, and get the second number
 	scanf("%s", &first);
@@ -206,17 +275,12 @@ int main(void) {
 	printf("Freq: %i\n", freqInput);
 	printf("Dur: %i", durationInput);
 
-	//Calculate the stall time
-	stallTime = freqCalc(freqInput)/2;
-
-	printf("StallTime: %lu\n", stallTime);
-
+*/
 
 
 	sei();
 
 	while(1) {
-
 	}
 
 }
