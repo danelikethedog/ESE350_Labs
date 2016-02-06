@@ -196,7 +196,12 @@ ISR(TIMER2_COMPA_vect) {
 		PORTC &= ~(1 << PC4);
 		PORTC &= ~(1 << PC5);
 	} else {
+
+
 		TIMSK1 &= ~(0x06);
+		rowStallTime = 0;
+		columnStallTime = 0;
+		
 	}
 
 	
