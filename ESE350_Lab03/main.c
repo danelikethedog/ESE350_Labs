@@ -37,44 +37,44 @@ long freqCalc(long inHertz) {
 	return 16000000/(2*inHertz);
 }
 
+short int freqCalcZero(long inHertz) {
+	return 250000/(2*inHertz);
+}
+
 
 ISR(TIMER2_COMPA_vect) {
 	if (rowHolder == 1) {
 
 		if (PIND & 0x04) {
 			keyPress = '1';
-
-			TIMSK1 |= 0x06;
-
-			rowStallTime = freqCalc(Freq1R);
-			columnStallTime = freqCalc(Freq1C);
+			int test;
+			OCR1A = freqCalc(Freq1R);
+			OCR0A = freqCalcZero(Freq1C);
+			test = OCR0A;
+			printf("%i\n", test);
 			
 			//printf("1");
 		} else if (PIND & 0x08) {
 			keyPress = '2';
 
-			TIMSK1 |= 0x06;
 
-			rowStallTime = freqCalc(Freq1R);
-			columnStallTime = freqCalc(Freq2C);
+			OCR1A = freqCalc(Freq1R);
+			OCR0A = freqCalcZero(Freq2C);
 
 
 			//printf("2");
 		} else if (PIND & 0x10) {
 			keyPress = '3';
 
-			TIMSK1 |= 0x06;
 
-			rowStallTime = freqCalc(Freq1R);
-			columnStallTime = freqCalc(Freq3C);
+			OCR1A = freqCalc(Freq1R);
+			OCR0A = freqCalcZero(Freq3C);
 			//printf("3");
 		} else if (PIND & 0x20) {
 			keyPress = 'A';
 
-			TIMSK1 |= 0x06;
-
-			rowStallTime = freqCalc(Freq1R);
-			columnStallTime = freqCalc(FreqAC);
+			OCR1A = freqCalc(Freq1R);
+			OCR0A = freqCalcZero(FreqAC);
 			//printf("A");
 		}
 
@@ -91,28 +91,26 @@ ISR(TIMER2_COMPA_vect) {
 		if (PIND & 0x04) {
 			keyPress = '4';
 
-			TIMSK1 |= 0x06;
-
-			rowStallTime = freqCalc(Freq4R);
-			columnStallTime = freqCalc(Freq1C);
+			OCR1A = freqCalc(Freq4R);
+			OCR0A = freqCalcZero(Freq1C);
 			//printf("4");
 		} else if (PIND & 0x08) {
 			keyPress = '5';
 
-			rowStallTime = freqCalc(Freq4R);
-			columnStallTime = freqCalc(Freq2C);
+			OCR1A = freqCalc(Freq4R);
+			OCR0A = freqCalcZero(Freq2C);
 			//printf("5");
 		} else if (PIND & 0x10) {
 			keyPress = '6';
 
-			rowStallTime = freqCalc(Freq4R);
-			columnStallTime = freqCalc(Freq3C);
+			OCR1A = freqCalc(Freq4R);
+			OCR0A = freqCalcZero(Freq3C);
 			//printf("6");
 		} else if (PIND & 0x20) {
 			keyPress = 'B';
 
-			rowStallTime = freqCalc(Freq4R);
-			columnStallTime = freqCalc(FreqAC);
+			OCR1A = freqCalc(Freq4R);
+			OCR0A = freqCalcZero(FreqAC);
 			//printf("B");
 		}
 
@@ -130,26 +128,26 @@ ISR(TIMER2_COMPA_vect) {
 		if (PIND & 0x04) {
 			keyPress = '7';
 
-			rowStallTime = freqCalc(Freq7R);
-			columnStallTime = freqCalc(Freq1C);
+			OCR1A = freqCalc(Freq7R);
+			OCR0A = freqCalcZero(Freq1C);
 			//printf("7");
 		} else if (PIND & 0x08) {
 			keyPress = '8';
 
-			rowStallTime = freqCalc(Freq7R);
-			columnStallTime = freqCalc(Freq2C);
+			OCR1A = freqCalc(Freq7R);
+			OCR0A = freqCalcZero(Freq2C);
 			//printf("8");
 		} else if (PIND & 0x10) {
 			keyPress = '9';
 
-			rowStallTime = freqCalc(Freq7R);
-			columnStallTime = freqCalc(Freq3C);
+			OCR1A = freqCalc(Freq7R);
+			OCR0A = freqCalcZero(Freq3C);
 			//printf("9");
 		} else if (PIND & 0x20) {
 			keyPress = 'C';
 
-			rowStallTime = freqCalc(Freq7R);
-			columnStallTime = freqCalc(FreqAC);
+			OCR1A = freqCalc(Freq7R);
+			OCR0A = freqCalcZero(FreqAC);
 			//printf("C");
 		}
 
@@ -166,26 +164,26 @@ ISR(TIMER2_COMPA_vect) {
 		if (PIND & 0x04) {
 			keyPress = '*';
 
-			rowStallTime = freqCalc(FreqStarR);
-			columnStallTime = freqCalc(Freq1C);
+			OCR1A = freqCalc(FreqStarR);
+			OCR0A = freqCalcZero(Freq1C);
 			//printf("*");
 		} else if (PIND & 0x08) {
 			keyPress = '0';
 
-			rowStallTime = freqCalc(FreqStarR);
-			columnStallTime = freqCalc(Freq2C);
+			OCR1A = freqCalc(FreqStarR);
+			OCR0A = freqCalcZero(Freq2C);
 			//printf("0");
 		} else if (PIND & 0x10) {
 			keyPress = '#';
 
-			rowStallTime = freqCalc(FreqStarR);
-			columnStallTime = freqCalc(Freq3C);
+			OCR1A = freqCalc(FreqStarR);
+			OCR0A = freqCalcZero(Freq3C);
 			//printf("#");
 		} else if (PIND & 0x20) {
 			keyPress = 'D';
 
-			rowStallTime = freqCalc(FreqStarR);
-			columnStallTime = freqCalc(FreqAC);
+			OCR1A = freqCalc(FreqStarR);
+			OCR0A = freqCalcZero(FreqAC);
 			//printf("D");
 		}
 
@@ -196,40 +194,24 @@ ISR(TIMER2_COMPA_vect) {
 		PORTC &= ~(1 << PC4);
 		PORTC &= ~(1 << PC5);
 	} else {
-
+		//This needs to be changed since will never hit
 
 		TIMSK1 &= ~(0x06);
-		rowStallTime = 0;
-		columnStallTime = 0;
-		
+		OCR0A = 0;
+		OCR1A = 0;
+
 	}
 
 	
 
 }
 
-ISR(TIMER1_COMPA_vect) {
-
-	OCR1A += rowStallTime;
-
-}
-
-ISR(TIMER1_COMPB_vect) {
-
-	OCR1B += columnStallTime;
-
-}
-
-
-
 
 int main(void) {
 
-	//stallTime = 18073;
-
 	DDRB |= 0xFF;
 	DDRC |= 0xFF;
-	DDRD |= 0x00;
+	DDRD |= 0x40;
 	PORTC = 0x00;
 	rowHolder = 1;
 	rowStallTime = 0;
@@ -244,15 +226,19 @@ int main(void) {
 	uart_init();
 
 
+	//Timer 0 Config
+	TCCR0A = 0x42;
+	TCCR0B = 0x03;
+	TIMSK0 = 0x00;
+	OCR0A = 0;
+
+
 	//Timer 1 Config
-	TCCR1A = 0x50;
-
-	TCCR1B = 0x01;
-
+	TCCR1A = 0x40;
+	TCCR1B = 0x09;
 	TIMSK1 = 0x00;
 
-	OCR1A = TCNT1 + 16;
-	OCR1B = TCNT1 + 16;
+	OCR1A = 0;
 
 
 	//Timer 2 Config
