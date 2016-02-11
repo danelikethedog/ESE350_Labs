@@ -53,6 +53,8 @@ ISR(TIMER2_COMPA_vect) {
 			test = OCR0A;
 			printf("%i\n", test);
 			
+
+			return;
 			//printf("1");
 		} else if (PIND & 0x08) {
 			keyPress = '2';
@@ -61,7 +63,7 @@ ISR(TIMER2_COMPA_vect) {
 			OCR1A = freqCalc(Freq1R);
 			OCR0A = freqCalcZero(Freq2C);
 
-
+			return;
 			//printf("2");
 		} else if (PIND & 0x10) {
 			keyPress = '3';
@@ -69,12 +71,16 @@ ISR(TIMER2_COMPA_vect) {
 
 			OCR1A = freqCalc(Freq1R);
 			OCR0A = freqCalcZero(Freq3C);
+
+			return;
 			//printf("3");
 		} else if (PIND & 0x20) {
 			keyPress = 'A';
 
 			OCR1A = freqCalc(Freq1R);
 			OCR0A = freqCalcZero(FreqAC);
+
+			return;
 			//printf("A");
 		}
 
@@ -93,26 +99,34 @@ ISR(TIMER2_COMPA_vect) {
 
 			OCR1A = freqCalc(Freq4R);
 			OCR0A = freqCalcZero(Freq1C);
+
+			return;
 			//printf("4");
 		} else if (PIND & 0x08) {
 			keyPress = '5';
 
 			OCR1A = freqCalc(Freq4R);
 			OCR0A = freqCalcZero(Freq2C);
+
+			return;
 			//printf("5");
 		} else if (PIND & 0x10) {
 			keyPress = '6';
 
 			OCR1A = freqCalc(Freq4R);
 			OCR0A = freqCalcZero(Freq3C);
+
+			return;
 			//printf("6");
 		} else if (PIND & 0x20) {
 			keyPress = 'B';
 
 			OCR1A = freqCalc(Freq4R);
 			OCR0A = freqCalcZero(FreqAC);
+
+			return;
 			//printf("B");
-		}
+		} 
 
 		rowHolder++;
 
@@ -130,24 +144,32 @@ ISR(TIMER2_COMPA_vect) {
 
 			OCR1A = freqCalc(Freq7R);
 			OCR0A = freqCalcZero(Freq1C);
+
+			return;
 			//printf("7");
 		} else if (PIND & 0x08) {
 			keyPress = '8';
 
 			OCR1A = freqCalc(Freq7R);
 			OCR0A = freqCalcZero(Freq2C);
+
+			return;
 			//printf("8");
 		} else if (PIND & 0x10) {
 			keyPress = '9';
 
 			OCR1A = freqCalc(Freq7R);
 			OCR0A = freqCalcZero(Freq3C);
+
+			return;
 			//printf("9");
 		} else if (PIND & 0x20) {
 			keyPress = 'C';
 
 			OCR1A = freqCalc(Freq7R);
 			OCR0A = freqCalcZero(FreqAC);
+
+			return;
 			//printf("C");
 		}
 
@@ -166,24 +188,32 @@ ISR(TIMER2_COMPA_vect) {
 
 			OCR1A = freqCalc(FreqStarR);
 			OCR0A = freqCalcZero(Freq1C);
+
+			return;
 			//printf("*");
 		} else if (PIND & 0x08) {
 			keyPress = '0';
 
 			OCR1A = freqCalc(FreqStarR);
 			OCR0A = freqCalcZero(Freq2C);
+
+			return;
 			//printf("0");
 		} else if (PIND & 0x10) {
 			keyPress = '#';
 
 			OCR1A = freqCalc(FreqStarR);
 			OCR0A = freqCalcZero(Freq3C);
+
+			return;
 			//printf("#");
 		} else if (PIND & 0x20) {
 			keyPress = 'D';
 
 			OCR1A = freqCalc(FreqStarR);
 			OCR0A = freqCalcZero(FreqAC);
+
+			return;
 			//printf("D");
 		}
 
@@ -193,16 +223,10 @@ ISR(TIMER2_COMPA_vect) {
 		PORTC &= ~(1 << PC3);
 		PORTC &= ~(1 << PC4);
 		PORTC &= ~(1 << PC5);
-	} else {
-		//This needs to be changed since will never hit
-
-		TIMSK1 &= ~(0x06);
-		OCR0A = 0;
-		OCR1A = 0;
-
 	}
 
-	
+	OCR0A = 0;
+	OCR1A = 0;
 
 }
 
