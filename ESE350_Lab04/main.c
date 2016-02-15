@@ -56,20 +56,22 @@ ISR(TIMER1_CAPT_vect) {
 			pulse_2 = ICR1;
 			pulse_width = pulse_2 - pulse_1;
 
-			OCR1A += 80;
+			OCR1A = 3200;
 			
 			
 			
 			DDRB |= 0x02;
-			PORTB |= 0x02;
+			//PORTB |= 0x02;
 			TCCR1B |= 0x40;
-			cap_state = 0;
+			
 
 			//Disable Input Interrupts
 			TIMSK1 &= ~(0x20);
 			//Enable comp interrupts
+			TCNT1 = 0x00;
 			TIMSK1 |= 0x02;
-			//printf("B\n");
+
+			cap_state = 0;
 			break;
 
 	}
@@ -77,15 +79,27 @@ ISR(TIMER1_CAPT_vect) {
 }
 
 ISR(TIMER1_COMPA_vect) {
+	switch(ping_state) {
+		case 0:
+			//Edge select high
+			TCCR1B |= 0x40;
+			//Set PB1 as input
+			DDRB &= ~(0x02);
+			//Pause compare interrupts
+			TIMSK1 &= ~(0x02);
+			//Enable input interrupts
+			TIMSK1 |= 0x20;
+			ping_state = 1;
 
-	//Edge select high
-	TCCR1B |= 0x40;
-	//Set PB1 as input
-	DDRB &= ~(0x02);
-	//Pause compare interrupts
-	TIMSK1 &= ~(0x02);
-	//Enable input interrupts
-	TIMSK1 |= 0x20;
+			break;
+		case 1:
+			PORTB |= 0x02;
+			OCR1A = 80;
+			ping_state = 0;
+
+			break;
+	}
+
 }
 
 
@@ -100,7 +114,7 @@ int main(void) {
 	//Toggle on output compare
 	TCCR1A |= 0x80;
 	//Unscaled Timer
-	TCCR1B |= 0x01;
+	TCCR1B |= 0x09;
 	//Enable Compare Interrupt
 	TIMSK1 |= 0x02;
 
@@ -129,8 +143,7 @@ int main(void) {
 
 	while(1) {
 		//printf("%lu\n", pulse_width);
-		printf("Light: %i", ADC);
-
+		//printf("Light: %i", ADC);
 
 		//Set Frequencies
 		freqSample = ADC;
