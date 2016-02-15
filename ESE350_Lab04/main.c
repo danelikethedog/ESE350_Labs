@@ -5,297 +5,88 @@
 #include <stdlib.h>
 #include "uart.h"
 
-//Define Frequencies
-#define Freq1C 1209
-#define Freq2C 1336
-#define Freq3C 1477
-#define FreqAC 1633
-#define Freq1R 697
-#define Freq4R 770
-#define Freq7R 852
-#define FreqStarR 941
+volatile int ping_state = 0;
+volatile int cap_state = 0;
+volatile int long pulse_1 = 0;
+volatile int long pulse_2 = 0;
+volatile int long pulse_width = 0;
 
 
+ISR(TIMER1_CAPT_vect) {
+	switch(cap_state) {
+		case 0:
+			pulse_1 = ICR1;
 
-//OC1A used as PB1
-int HiOrLo;
-long unsigned rowStallTime;
-long unsigned columnStallTime;
-char next_char;
-int iterate;
-char first[8];
-char second[8];
-int rowHolder;
-char keyPress;
+			//Edge select low
+			TCCR1B &= ~(0x40);
 
-/*
-Need to create a while loop for while key is depressed in each if statement
-or branch to helper function and play out frequency on OC1A and OC1B.
-*/
+			cap_state = 1;
+			//printf("A\n");
+			break;
 
-long freqCalc(long inHertz) {
-	return 16000000/(2*inHertz);
-}
+		case 1:
+			pulse_2 = ICR1;
+			pulse_width = pulse_2 - pulse_1;
 
-short int freqCalcZero(long inHertz) {
-	return 250000/(2*inHertz);
-}
-
-
-ISR(TIMER2_COMPA_vect) {
-	if (rowHolder == 1) {
-
-		if (PIND & 0x04) {
-			keyPress = '1';
-			int test;
-			OCR1A = freqCalc(Freq1R);
-			OCR0A = freqCalcZero(Freq1C);
-			test = OCR0A;
-			printf("%i\n", test);
+			OCR1A += 80;
 			
+			
+			
+			DDRB |= 0x02;
+			PORTB |= 0x02;
+			TCCR1B |= 0x40;
+			cap_state = 0;
 
-			return;
-			//printf("1");
-		} else if (PIND & 0x08) {
-			keyPress = '2';
+			//Disable Input Interrupts
+			TIMSK1 &= ~(0x20);
+			//Enable comp interrupts
+			TIMSK1 |= 0x02;
+			//printf("B\n");
+			break;
 
-
-			OCR1A = freqCalc(Freq1R);
-			OCR0A = freqCalcZero(Freq2C);
-
-			return;
-			//printf("2");
-		} else if (PIND & 0x10) {
-			keyPress = '3';
-
-
-			OCR1A = freqCalc(Freq1R);
-			OCR0A = freqCalcZero(Freq3C);
-
-			return;
-			//printf("3");
-		} else if (PIND & 0x20) {
-			keyPress = 'A';
-
-			OCR1A = freqCalc(Freq1R);
-			OCR0A = freqCalcZero(FreqAC);
-
-			return;
-			//printf("A");
-		}
-
-		rowHolder++;
-
-		PORTC &= ~(1 << PC2);
-		PORTC |= (1 << PC3);
-		PORTC &= ~(1 << PC4);
-		PORTC &= ~(1 << PC5);
-
-	} else if (rowHolder == 2) {
-		
-
-		if (PIND & 0x04) {
-			keyPress = '4';
-
-			OCR1A = freqCalc(Freq4R);
-			OCR0A = freqCalcZero(Freq1C);
-
-			return;
-			//printf("4");
-		} else if (PIND & 0x08) {
-			keyPress = '5';
-
-			OCR1A = freqCalc(Freq4R);
-			OCR0A = freqCalcZero(Freq2C);
-
-			return;
-			//printf("5");
-		} else if (PIND & 0x10) {
-			keyPress = '6';
-
-			OCR1A = freqCalc(Freq4R);
-			OCR0A = freqCalcZero(Freq3C);
-
-			return;
-			//printf("6");
-		} else if (PIND & 0x20) {
-			keyPress = 'B';
-
-			OCR1A = freqCalc(Freq4R);
-			OCR0A = freqCalcZero(FreqAC);
-
-			return;
-			//printf("B");
-		} 
-
-		rowHolder++;
-
-		PORTC |= (1 << PC4);
-		PORTC &= ~(1 << PC2);
-		PORTC &= ~(1 << PC3);
-		PORTC &= ~(1 << PC5);
-
-	} else if (rowHolder == 3) {
-
-		
-
-		if (PIND & 0x04) {
-			keyPress = '7';
-
-			OCR1A = freqCalc(Freq7R);
-			OCR0A = freqCalcZero(Freq1C);
-
-			return;
-			//printf("7");
-		} else if (PIND & 0x08) {
-			keyPress = '8';
-
-			OCR1A = freqCalc(Freq7R);
-			OCR0A = freqCalcZero(Freq2C);
-
-			return;
-			//printf("8");
-		} else if (PIND & 0x10) {
-			keyPress = '9';
-
-			OCR1A = freqCalc(Freq7R);
-			OCR0A = freqCalcZero(Freq3C);
-
-			return;
-			//printf("9");
-		} else if (PIND & 0x20) {
-			keyPress = 'C';
-
-			OCR1A = freqCalc(Freq7R);
-			OCR0A = freqCalcZero(FreqAC);
-
-			return;
-			//printf("C");
-		}
-
-		rowHolder++;
-
-		PORTC &= ~(1 << PC2);
-		PORTC &= ~(1 << PC3);
-		PORTC &= ~(1 << PC4);
-		PORTC |= (1 << PC5);
-
-
-	} else if (rowHolder == 4) {
-
-		if (PIND & 0x04) {
-			keyPress = '*';
-
-			OCR1A = freqCalc(FreqStarR);
-			OCR0A = freqCalcZero(Freq1C);
-
-			return;
-			//printf("*");
-		} else if (PIND & 0x08) {
-			keyPress = '0';
-
-			OCR1A = freqCalc(FreqStarR);
-			OCR0A = freqCalcZero(Freq2C);
-
-			return;
-			//printf("0");
-		} else if (PIND & 0x10) {
-			keyPress = '#';
-
-			OCR1A = freqCalc(FreqStarR);
-			OCR0A = freqCalcZero(Freq3C);
-
-			return;
-			//printf("#");
-		} else if (PIND & 0x20) {
-			keyPress = 'D';
-
-			OCR1A = freqCalc(FreqStarR);
-			OCR0A = freqCalcZero(FreqAC);
-
-			return;
-			//printf("D");
-		}
-
-		rowHolder = 1;
-
-		PORTC |= (1 << PC2);
-		PORTC &= ~(1 << PC3);
-		PORTC &= ~(1 << PC4);
-		PORTC &= ~(1 << PC5);
 	}
 
-	OCR0A = 0;
-	OCR1A = 0;
+}
 
+ISR(TIMER1_COMPA_vect) {
+
+	//Edge select high
+	TCCR1B |= 0x40;
+	//Set PB1 as input
+	DDRB &= ~(0x02);
+	//Pause compare interrupts
+	TIMSK1 &= ~(0x02);
+	//Enable input interrupts
+	TIMSK1 |= 0x20;
 }
 
 
 int main(void) {
 
-	DDRB |= 0xFF;
-	DDRC |= 0xFF;
-	DDRD |= 0x40;
-	PORTC = 0x00;
-	rowHolder = 1;
-	rowStallTime = 0;
-	columnStallTime = 0;
 
-	//Set rows early to prevent timing error
-	PORTC |= (1 << PC2);
-	PORTC &= ~(1 << PC3);
-	PORTC &= ~(1 << PC4);
-	PORTC &= ~(1 << PC5);
+
+	//PB1 Set as output
+	DDRB |= 0x02;
+	//Pull PB1 high
+	PORTB |= 0x02;
+	//Toggle on output compare
+	TCCR1A |= 0x80;
+	//Unscaled Timer
+	TCCR1B |= 0x01;
+	//Enable Compare Interrupt
+	TIMSK1 |= 0x02;
+
+	
+
+	//80 ticks on unscaled is 5us
+	OCR1A = 80;
 
 	uart_init();
-
-
-	//Timer 0 Config
-	TCCR0A = 0x42;
-	TCCR0B = 0x03;
-	TIMSK0 = 0x00;
-	OCR0A = 0;
-
-
-	//Timer 1 Config
-	TCCR1A = 0x40;
-	TCCR1B = 0x09;
-	TIMSK1 = 0x00;
-
-	OCR1A = 0;
-
-
-	//Timer 2 Config
-
-	TCCR2A |= 0x02;
-	TCCR2B |= 0x05;
-	TIMSK2 |= 0x02;
-	OCR2A = 0xFF;
-
-/*
-
-	//Get the first number, break on space, and get the second number
-	scanf("%s", &first);
-	scanf("%s", &second);
-
-
-	printf("First: %s\n", first);
-	printf("Second: %s\n", second);
-
-	//Convert the strings collected to longs
-	long unsigned freqInput = strtol(&first, NULL, 10);
-	long unsigned durationInput = strtol(&second, NULL, 10);
-
-	//Test print statements for the input freq and duration
-	printf("Freq: %i\n", freqInput);
-	printf("Dur: %i", durationInput);
-
-*/
-
-
 	sei();
 
+
 	while(1) {
+		printf("%lu\n", pulse_width);
 	}
 
 }
