@@ -5,6 +5,16 @@
 #include <stdlib.h>
 #include "uart.h"
 
+
+#define freq1 1000
+#define freq2 1122
+#define freq3 1260
+#define freq4 1335
+#define freq5 1498
+#define freq6 1682
+#define freq7 1888
+#define freq8 2000
+
 volatile int ping_state = 0;
 volatile int cap_state = 0;
 volatile int long pulse_1 = 0;
@@ -12,8 +22,21 @@ volatile int long pulse_2 = 0;
 volatile int long pulse_width = 0;
 volatile int freqSample = 0;
 
+
+
 short int freqCalc(long inHertz) {
-	return 250000/(2*inHertz);
+	short int returnVal;
+
+	returnVal = inHertz < 431 ? freq1 :
+				inHertz < 479 ? freq2 :
+				inHertz < 527 ? freq3 :
+				inHertz < 575 ? freq4 :
+				inHertz < 623 ? freq5 :
+				inHertz < 671 ? freq6 :
+				inHertz < 719 ? freq7 :
+				freq8;
+
+	return 250000/(2*returnVal);
 }
 
 
@@ -94,6 +117,7 @@ int main(void) {
 	TCCR0A = 0x42;
 	TCCR0B = 0x03;
 	TIMSK0 = 0x00;
+	DDRD |= 0x40;
 	
 
 	//80 ticks on unscaled is 5us
