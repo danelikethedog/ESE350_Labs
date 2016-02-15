@@ -10,6 +10,11 @@ volatile int cap_state = 0;
 volatile int long pulse_1 = 0;
 volatile int long pulse_2 = 0;
 volatile int long pulse_width = 0;
+volatile int freqSample = 0;
+
+short int freqCalc(long inHertz) {
+	return 250000/(2*inHertz);
+}
 
 
 ISR(TIMER1_CAPT_vect) {
@@ -84,6 +89,11 @@ int main(void) {
 	ADCSRA |= 0xE0;
 	ADCSRB = 0x00;
 
+
+	//Frequency Set Up
+	TCCR0A = 0x42;
+	TCCR0B = 0x03;
+	TIMSK0 = 0x00;
 	
 
 	//80 ticks on unscaled is 5us
@@ -96,6 +106,11 @@ int main(void) {
 	while(1) {
 		//printf("%lu\n", pulse_width);
 		printf("Light: %i", ADC);
+
+
+		//Set Frequencies
+		freqSample = ADC;
+		OCR0A = freqCalc(freqSample);
 	}
 
 }
