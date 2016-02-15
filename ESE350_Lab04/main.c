@@ -64,7 +64,7 @@ ISR(TIMER1_COMPA_vect) {
 int main(void) {
 
 
-
+	//Proximity Sensor Set Up
 	//PB1 Set as output
 	DDRB |= 0x02;
 	//Pull PB1 high
@@ -76,6 +76,14 @@ int main(void) {
 	//Enable Compare Interrupt
 	TIMSK1 |= 0x02;
 
+
+
+	//Light Sensor Set Up
+	DDRC = 0x00;
+	ADMUX |= 0x40;
+	ADCSRA |= 0xE0;
+	ADCSRB = 0x00;
+
 	
 
 	//80 ticks on unscaled is 5us
@@ -86,7 +94,8 @@ int main(void) {
 
 
 	while(1) {
-		printf("%lu\n", pulse_width);
+		//printf("%lu\n", pulse_width);
+		printf("Light: %i", ADC);
 	}
 
 }
