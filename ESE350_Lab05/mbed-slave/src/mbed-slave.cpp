@@ -1,6 +1,5 @@
-#include "mbed.h"
+#include "D:\Google Drive\School Work\ESE350\ESE350_Labs\ESE350_Lab05\mbed-slave\.pioenvs\lpc1768\FrameworkMbedInc-250686161\mbed.h"
 #include "MRF24J40.h"
-
 #include <string>
 
 // RF tranceiver to link with handheld.
@@ -89,6 +88,10 @@ int main (void)
     //Set the Channel. 0 is default, 15 is max
     mrf.SetChannel(channel);
 
+    led4=1;
+
+
+    /*
     //Start the timer
     sendTimer.start();
     wackTimer.start();
@@ -154,5 +157,5 @@ int main (void)
             pc.printf("Analog: %1.4f\r\n", lightSensor.read());
 
         }
-    }
+    } */
 }

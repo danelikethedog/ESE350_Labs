@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Digital Greenhouse</title>
+    <!--<link rel="stylesheet" href="style.css">-->
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!--<script src="script.js"></script> -->
+  </head>
+  <body>
+  <div class="container" style="width: 45%; margin-left:auto; margin-right:auto;">
+		<div class="row">
+			<div class="col-md-6 pull-left" style="background-color: gray; height:21em; padding-right:3px;"></div>
+			<div class="col-md-6 pull-right" style="background-color:gray; height:21em;"></div>
+		</div>
+		<div class="row" style="padding-top:1px;">
+			<div class="col-md-6 pull-left" style="background-color: gray; height:21em; padding-right:3px;"></div>
+			<div class="col-md-6 pull-right" style="background-color: gray; height:21em;"></div>
+		</div>
+  </div>
+  <br><br>
+    <div class="jumbotron" style="width: 45%; margin-left:auto; margin-right:auto;>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12"><h1>System</h1></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4"><h2>Plants</h2></div>
+				<div class="col-xs-4"><h2>Lights On</h2></div>
+				<div class="col-xs-4"><h2>Current</h2></div>
+			</div>
+			<!-- Plants Currently Being Grown -->
+			<div class="row">
+				<div class="col-xs-4">
+					<table class="table table-condensed table-hover">
+						<tr><td>Tomatoes</td></tr>
+						<tr><td>Leeks</td></tr>
+						<tr><td>Potatoes</td></tr>
+						<tr><td>Zuccini</td></tr>
+					</table>
+				</div>
+				<!--- Lights On -->
+				<div class="col-xs-4">
+					<table class="table table-condensed table-hover">
+						<tr><td><input type="checkbox"></td><td>Tomatoes</td></tr>
+						<tr><td><input type="checkbox"></td><td>Leeks</td></tr>
+						<tr><td><input type="checkbox"></td><td>Potatoes</td></tr>
+						<tr><td><input type="checkbox"></td><td>Zuccini</td></tr>
+					</table>
+				</div>
+				<!-- Current Specs -->
+				<div class="col-xs-4">
+					<div class="row">
+						<div class="col-xs-12">Current Temp: </div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">Current Humidity: </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </body>
+</html>

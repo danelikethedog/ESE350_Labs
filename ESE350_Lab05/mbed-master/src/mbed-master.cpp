@@ -1,6 +1,5 @@
-#include "mbed.h"
+#include "D:\Google Drive\School Work\ESE350\ESE350_Labs\ESE350_Lab05\mbed-master\.pioenvs\lpc1768\FrameworkMbedInc-250686161\mbed.h"
 #include "MRF24J40.h"
-
 #include <string>
 
 // RF tranceiver to link with handheld.
@@ -112,6 +111,10 @@ int main (void)
     //Set the Channel. 0 is default, 15 is max
     mrf.SetChannel(channel);
 
+    while(1) {
+      std::cout << "testing";
+    }
+    /*
     //Start the timer
     sendTimer.start();
     delayTimer.start();
@@ -180,5 +183,5 @@ int main (void)
             pc.printf("MSent: %s\r\n", txBuffer);
             pc.printf("Score: %i\r\n", score);
         }
-    }
+    } */
 }
