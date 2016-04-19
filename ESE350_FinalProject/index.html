@@ -13,17 +13,30 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!--<script src="script.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="index-script.js"></script>
   </head>
   <body>
+  <div class="container">
+	  <div class="row">
+		<div class="col-xs-6"><h1>Digital Greenhouse</h1></div>
+		<div class="col-xs-4 col-xs-offset-2 pull-right"><h4>HOME | REPORTS | HISTORY</h4></div>
+	  </div>
+  </div>
   <div class="container" style="width: 45%; margin-left:auto; margin-right:auto;">
 		<div class="row">
-			<div class="col-md-6 pull-left" style="background-color: gray; height:21em; padding-right:3px;"></div>
+			<div class="col-md-6 pull-left clickable" style="display:flex; align-items: center; background-color: gray; height:21em; padding-right:3px;">
+				<div class="hid col-md-8 clickable" style="background-color: white; padding-left:10px; padding-top:5px;">
+				<h4>Tomatoes</h4>
+				<p>Water Content:</p>
+				<p>Light:</p>
+				</div>
+			</div>
 			<div class="col-md-6 pull-right" style="background-color:gray; height:21em;"></div>
 		</div>
 		<div class="row" style="padding-top:1px;">
-			<div class="col-md-6 pull-left" style="background-color: gray; height:21em; padding-right:3px;"></div>
-			<div class="col-md-6 pull-right" style="background-color: gray; height:21em;"></div>
+			<div class="col-md-6 pull-left clickable" style="background-color: gray; height:21em; padding-right:3px;"></div>
+			<div class="col-md-6 pull-right clickable" style="background-color: gray; height:21em;"></div>
 		</div>
   </div>
   <br><br>
