@@ -7,13 +7,15 @@ int led2 = D7;
 
 DHT dht(1,DHT11);
 
+int once = 0;
+
 SYSTEM_MODE(AUTOMATIC);
 
 void setup() {
 
     pinMode(led2, OUTPUT);
     pinMode(A0, INPUT);
-    pinMode(A3, OUTPUT);
+    pinMode(A1, INPUT);
     dht.begin();
 
 }
@@ -32,10 +34,13 @@ void loop() {
     Serial.print("Humidity is ");
     Serial.println(humidity);
     float humSensTemp = dht.getTempFarenheit();
-    
-    int once = 0;
+
+    float light = analogRead(A1);
+    Serial.print("Light Intensity is ");
+    Serial.println(light);
+
     if (!once) {
-        //Particle.publish("temperature", stringConv);
+        Particle.publish("temperature", stringConv);
         once = 1;
     }
     
