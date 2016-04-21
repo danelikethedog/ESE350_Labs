@@ -2,17 +2,21 @@
     // your code here
 	var mouseX;
 	var mouseY;
+	
 	$('.clickable').click(function(e) {
-		if($('.dropdown').css('display') == 'none' && e.target == this) {
+		if($(this).children().css('display') == 'none' && e.target == this) {
 		mouseX = e.pageX;
 		mouseY = e.pageY;
+		var position = $(this).offset();
+		console.log(e.clientX);
+		console.log(e.pageX);
 		console.log('showing');
-		$('.dropdown').css({'top': mouseY-70, 'left':mouseX-465, 'position':'absolute'}).show();
+		$(this).children().css({'top': mouseY-position.top, 'left':mouseX-position.left, 'position':'absolute'}).show();
 		}}); 
 		
 		
 	$('.exit').click(function() {
-		$('.dropdown').hide();
+		$(this).parent().parent().hide();
 		console.log('hidden');
 	});
  });

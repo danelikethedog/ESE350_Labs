@@ -71,16 +71,25 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select plant, temperature, water, light_intensity from entries order by id desc')
+    cur = db.execute('select id, plant, temperature, water, light_intensity from entries order by id')
     entries = cur.fetchall()
+    while(len(entries) < 4):
+	    entries.append(None)
     return render_template('show_entries.html', entries=entries)
 
 @app.route('/test')
 def html_dev():
 	db = get_db()
-	cur = db.execute('select plant from entries')
+	cur = db.execute('select id, plant from entries order by id')
 	plants = cur.fetchall()
 	return render_template('index-new.html', entries=plants)
+	
+@app.route('/plant', methods=['POST'])
+def add_plant():
+	db = get_db()
+	db.execute('insert into entries(id, plant) values (?,?)', [request.form['id'], request.form['plant']])
+	db.commit()
+	return redirect(url_for('html_dev'))
 
 @app.route('/add', methods=['POST'])
 def add_entry():
