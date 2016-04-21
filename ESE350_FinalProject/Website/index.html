@@ -71,6 +71,42 @@
             <div class="container-fluid">
 
                 <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Current Temp</h3>
+                            </div>
+                            <div class="panel-body" id="temp-Panel">
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Current Humidity</h3>
+                            </div>
+                            <div class="panel-body" id="humidity-Panel">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Current Light</h3>
+                            </div>
+                            <div class="panel-body" id="light-Panel">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 
 
@@ -88,7 +124,6 @@
 
                                 </canvas>
                                 <div id="temp-data">
-                                    <h3>Shit Should Go After This</h3>
 
                                 </div>
                                 <script>$('temp-data').css("border", "3px solid red");</script>
@@ -121,7 +156,10 @@
                                 <script>
                                     $(document).ready(function() {
                                         $.getJSON('https://dweet.io/get/latest/dweet/for/isoplantation' , function(tempData) {
-                                            $('#temp-data').append('<h3> Current Temp is : ' + tempData.with[0].content.data + '</h3>');
+                                            var parseJSON = JSON.parse(tempData.with[0].content.data);
+                                            $('#temp-Panel').append('<h1>' + parseJSON.t + '˚F</h1>');
+                                            $('#humidity-Panel').append('<h1>' + parseJSON.h + '%</h1>');
+                                            $('#light-Panel').append('<h1>' + parseJSON.l + '</h1>');
                                         });
                                     });
                                 </script>

@@ -26,6 +26,7 @@ void loop() {
     float fahrenheit= (millivolts)/10;
     Serial.print(fahrenheit);
     Serial.println(" degrees Fahrenheit, ");
+
     int publishTemp = round(fahrenheit);
     char stringConv[15];
     sprintf(stringConv, "%d", publishTemp);
@@ -35,12 +36,23 @@ void loop() {
     Serial.println(humidity);
     float humSensTemp = dht.getTempFarenheit();
 
+    int humidityRound = round(humidity);
+    char humidityConv[15];
+    sprintf(humidityConv, "%d",humidityRound);
+
+
+
     float light = analogRead(A1);
+    int lightRound = round(light);
     Serial.print("Light Intensity is ");
     Serial.println(light);
 
+    char json[63];
+    sprintf(json, "{\"t\": %i, \"h\": %i, \"l\": %i}", publishTemp, humidityRound,lightRound);
+
     if (!once) {
-        Particle.publish("temperature", stringConv);
+        Particle.publish("curState", json);
+        //Particle.publish("humidity", humidityConv);
         once = 1;
     }
     
