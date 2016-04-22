@@ -3,11 +3,20 @@
 #include <math.h>
 
 
+
 int led2 = D7;
 
 DHT dht(1,DHT11);
 
 int once = 0;
+int curMinute = 0;
+
+//Values to publish
+int publishTemp = 0;
+int publishHumidity = 0;
+int publishLight = 0;
+
+
 
 SYSTEM_MODE(AUTOMATIC);
 
@@ -20,7 +29,9 @@ void setup() {
 
 }
 
+
 void loop() {
+    /*
     int temp = analogRead(A0);
     float millivolts= (temp/4096.0) * 3300.0;
     float fahrenheit= (millivolts)/10;
@@ -28,8 +39,7 @@ void loop() {
     Serial.println(" degrees Fahrenheit, ");
 
     int publishTemp = round(fahrenheit);
-    char stringConv[15];
-    sprintf(stringConv, "%d", publishTemp);
+
     
     float humidity = dht.getHumidity();
     Serial.print("Humidity is ");
@@ -37,8 +47,7 @@ void loop() {
     float humSensTemp = dht.getTempFarenheit();
 
     int humidityRound = round(humidity);
-    char humidityConv[15];
-    sprintf(humidityConv, "%d",humidityRound);
+
 
 
 
@@ -55,7 +64,8 @@ void loop() {
         //Particle.publish("humidity", humidityConv);
         once = 1;
     }
-    
+    */
+    minuteUpdate();
 
     digitalWrite(led2, HIGH);
     
@@ -68,3 +78,53 @@ void loop() {
     delay(1000);
 
 }
+
+int minuteUpdate() {
+    int newMinute = Time.minute();
+    if (newMinute != curMinute) {
+        curMinute = newMinute;
+        updateValues();
+        sendDashWebhook();
+    }
+    updateValues();
+
+}
+
+void updateValues() {
+
+    //Get new temp
+    int temp = analogRead(A0);
+    float millivolts= (temp/4096.0) * 3300.0;
+    float fahrenheit= (millivolts)/10;
+    publishTemp = round(fahrenheit);
+
+    //Get new humidity
+    float humidity = dht.getHumidity();
+    publishHumidity = round(humidity);
+
+    //Get new light 
+    float light = analogRead(A1);
+    publishLight = round(light);
+    serialPrint(publishTemp, publishHumidity, publishLight);
+
+}
+
+void sendDashWebhook() {
+    char json[63];
+    sprintf(json, "{\"t\": %i, \"h\": %i, \"l\": %i}", publishTemp, publishHumidity,publishLight);
+    Particle.publish("curState", json);
+}
+
+void serialPrint(int t, int h, int l) {
+    Serial.print("Temp: ");
+    Serial.println(t);
+    Serial.print("Hum: ");
+    Serial.println(h);
+    Serial.print("Light: ");
+    Serial.println(l);
+}
+
+
+
+
+

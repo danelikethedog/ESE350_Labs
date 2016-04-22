@@ -131,29 +131,28 @@
                                 <script src="water-saturation.js"></script>
                                 <script>
 
-                                      window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                                    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                                                                      window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-                                      function get(id) {
-                                          return document.getElementById(id);
-                                      }
+                                    function get(id) {
+                                        return document.getElementById(id);
+                                    }
 
-                                      var heat = simpleheat('canvas').data(data).max(18),
-                                          frame;
+                                    var heat = simpleheat('canvas').data(data).max(18),
+                                        frame;
 
-                                      function draw() {
-                                          console.time('draw');
-                                          heat.draw();
-                                          console.timeEnd('draw');
-                                          frame = null;
-                                      }
-
-                                      draw();
+                                    function draw() {
+                                        console.time('draw');
+                                        heat.draw();
+                                        console.timeEnd('draw');
+                                        frame = null;
+                                    }
 
 
-                                </script>
+                                    draw();
 
-                                <script>
+                                    
+
                                     $(document).ready(function() {
                                         $.getJSON('https://dweet.io/get/latest/dweet/for/isoplantation' , function(tempData) {
                                             var parseJSON = JSON.parse(tempData.with[0].content.data);
@@ -162,6 +161,34 @@
                                             $('#light-Panel').append('<h1>' + parseJSON.l + '</h1>');
                                         });
                                     });
+
+
+                                    $(document).ready(
+                                        function() {
+                                            setInterval(function() {
+                                                $.getJSON('https://dweet.io/get/latest/dweet/for/isoplantation' , function(tempData) {
+                                                    var parseJSON = JSON.parse(tempData.with[0].content.data);
+                                                    $('#temp-Panel').html('<h1>' + parseJSON.t + '˚F</h1>');
+                                                    $('#humidity-Panel').html('<h1>' + parseJSON.h + '%</h1>');
+                                                    $('#light-Panel').html('<h1>' + parseJSON.l + '</h1>');
+                                            });
+                                        }, 60000);
+                                    });
+
+
+                                </script>
+
+                                <script>
+                                    /*
+                                    $(document).ready(function() {
+                                        $.getJSON('https://dweet.io/get/latest/dweet/for/isoplantation' , function(tempData) {
+                                            var parseJSON = JSON.parse(tempData.with[0].content.data);
+                                            $('#temp-Panel').append('<h1>' + parseJSON.t + '˚F</h1>');
+                                            $('#humidity-Panel').append('<h1>' + parseJSON.h + '%</h1>');
+                                            $('#light-Panel').append('<h1>' + parseJSON.l + '</h1>');
+                                        });
+                                    });
+*/
                                 </script>
                                 
                                 
