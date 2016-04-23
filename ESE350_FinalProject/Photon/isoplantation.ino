@@ -16,6 +16,9 @@ int publishTemp = 0;
 int publishHumidity = 0;
 int publishLight = 0;
 
+//Value for led toggle
+int state = 0;
+
 
 
 SYSTEM_MODE(AUTOMATIC);
@@ -23,8 +26,11 @@ SYSTEM_MODE(AUTOMATIC);
 void setup() {
 
     pinMode(led2, OUTPUT);
+    pinMode(D0, OUTPUT);
     pinMode(A0, INPUT);
     pinMode(A1, INPUT);
+    digitalWrite(led2, LOW);
+    Particle.function("flipLight", flipLight);
     dht.begin();
 
 }
@@ -122,6 +128,12 @@ void serialPrint(int t, int h, int l) {
     Serial.println(h);
     Serial.print("Light: ");
     Serial.println(l);
+}
+
+int flipLight(String arg) {
+    state = !state;
+    digitalWrite(D0, (state) ? HIGH : LOW);
+    return 1;
 }
 
 
