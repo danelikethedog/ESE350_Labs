@@ -54,3 +54,12 @@ img {
 .form>input {
 	width:95%;
 }
+.form-row {
+	
+	white-space:nowrap;
+	
+}
+.form-row>input {
+	
+	width:25px;
+}

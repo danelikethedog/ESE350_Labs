@@ -35,12 +35,12 @@
 					<!-- Need to add generated information from database -->
 					{% if ((entries[count] is defined) and (entries[count].id == 0)) %}
 					<div class="col-xs-10 picture" style="text-align:center;">
-						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant+'.png') }}">
-						<h2 class="inside-pic">{{entries[count].plant}}</h2>
+						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant.title()+'.png') }}">
+						<h2 class="inside-pic">{{entries[count].plant.title()}}</h2>
 					</div>
 					<div class="col-xs-10 dropdown">
 						<div class="row">
-							<h4>{{entries[count].plant}}</h4>
+							<h4>{{entries[count].plant.title().title()}}</h4>
 							<a href="#" class="exit">x</a>
 						</div>
 						<div class="row">
@@ -50,8 +50,8 @@
 							</table>
 							<form action="/update" method="post" class="form">
 								<input type="hidden" name="id" value="0">
-								Water: <input type="text" name="set_water" label="Water: ">
-								<br>Light: <input type="text" name="set_light" label="Light: ">
+								<div class="form-row">Water: {{ entries[count].current_water }} /<input type="text" name="set_water" value="{{ entries[count].set_water }}"></div>
+								<div class="form-row"><br>Light: {{ entries[count].current_light }}/<input type="text" name="set_light" value="{{ entries[count].set_light }}"></div>
 								<br><input type="submit" value="Update!">
 							</form>
 							<p><a href="#" class="modify">Modify Settings</a></p>
@@ -91,21 +91,28 @@
 				<div class="col-xs-6 clickable planter pull-right">
 					<!-- Need to add generated information from database -->
 					{% if ((entries[count] is defined) and (entries[count].id == 1)) %}
-										<div class="col-xs-10 picture" style="text-align:center;">
-						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant+'.png') }}">
-						<h2 class="inside-pic">{{entries[count].plant}}</h2>
+					<div class="col-xs-10 picture" style="text-align:center;">
+						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant.title()+'.png') }}">
+						<h2 class="inside-pic">{{entries[count].plant.title()}}</h2>
 					</div>
 					<div class="col-xs-10 dropdown">
 						<div class="row">
-							<h4>{{entries[count].plant}}</h4>
+							<h4>{{entries[count].plant.title().title()}}</h4>
 							<a href="#" class="exit">x</a>
 						</div>
 						<div class="row">
-							<table class="table table-condensed table-hover">
-								<tr><td>Water: {{ entries[count].water }}</td></tr>
-								<tr><td>Light: {{ entries[count].light_intensity }}</td></tr>
+							<table class="table table-condensed table-hover parameters">
+								<tr><td>Water:{{ entries[count].current_water }}/{{ entries[count].set_water }}</td></tr>
+								<tr><td>Light: {{ entries[count].current_light }}/{{ entries[count].set_light }}</td></tr>
 							</table>
-							<p><a href="/delete/1">Remove Plant</a></p>
+							<form action="/update" method="post" class="form">
+								<input type="hidden" name="id" value="1">
+								<div class="form-row">Water: {{ entries[count].current_water }} /<input type="text" name="set_water" value="{{ entries[count].set_water }}"></div>
+								<div class="form-row"><br>Light: {{ entries[count].current_light }}/<input type="text" name="set_light" value="{{ entries[count].set_light }}"></div>
+								<br><input type="submit" value="Update!">
+							</form>
+							<p><a href="#" class="modify">Modify Settings</a></p>
+							<p><a href="/delete/0">Remove Plant</a></p>
 						</div>
 					</div>
 					{% set count = count + 1%}
@@ -140,21 +147,28 @@
 				<div class="col-xs-6 clickable planter pull-left">
 					<!-- Need to add generated information from database -->
 					{% if ((entries[count] is defined) and (entries[count].id == 2)) %}
-										<div class="col-xs-10 picture" style="text-align:center;">
-						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant+'.png') }}">
-						<h2 class="inside-pic">{{entries[count].plant}}</h2>
+					<div class="col-xs-10 picture" style="text-align:center;">
+						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant.title()+'.png') }}">
+						<h2 class="inside-pic">{{entries[count].plant.title()}}</h2>
 					</div>
 					<div class="col-xs-10 dropdown">
 						<div class="row">
-							<h4>{{entries[count].plant}}</h4>
+							<h4>{{entries[count].plant.title().title()}}</h4>
 							<a href="#" class="exit">x</a>
 						</div>
 						<div class="row">
-							<table class="table table-condensed table-hover">
-								<tr><td>Water: {{ entries[count].water }}</td></tr>
-								<tr><td>Light: {{ entries[count].light_intensity }}</td></tr>
+							<table class="table table-condensed table-hover parameters">
+								<tr><td>Water:{{ entries[count].current_water }}/{{ entries[count].set_water }}</td></tr>
+								<tr><td>Light: {{ entries[count].current_light }}/{{ entries[count].set_light }}</td></tr>
 							</table>
-							<p><a href="/delete/2">Remove Plant</a></p>
+							<form action="/update" method="post" class="form">
+								<input type="hidden" name="id" value="2">
+								<div class="form-row">Water: {{ entries[count].current_water }} /<input type="text" name="set_water" value="{{ entries[count].set_water }}"></div>
+								<div class="form-row"><br>Light: {{ entries[count].current_light }}/<input type="text" name="set_light" value="{{ entries[count].set_light }}"></div>
+								<br><input type="submit" value="Update!">
+							</form>
+							<p><a href="#" class="modify">Modify Settings</a></p>
+							<p><a href="/delete/0">Remove Plant</a></p>
 						</div>
 					</div>
 					{% set count = count + 1%}
@@ -188,20 +202,27 @@
 					<!-- Need to add generated information from database -->
 					{% if ((entries[count] is defined) and (entries[count].id == 3)) %}
 					<div class="col-xs-10 picture" style="text-align:center;">
-						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant+'.png') }}">
-						<h2 class="inside-pic">{{entries[count].plant}}</h2>
+						<img class="inside-pic" src="{{ url_for('static', filename=entries[count].plant.title()+'.png') }}">
+						<h2 class="inside-pic">{{entries[count].plant.title()}}</h2>
 					</div>
 					<div class="col-xs-10 dropdown">
 						<div class="row">
-							<h4>{{entries[count].plant}}</h4>
+							<h4>{{entries[count].plant.title().title()}}</h4>
 							<a href="#" class="exit">x</a>
 						</div>
 						<div class="row">
-							<table class="table table-condensed table-hover">
-								<tr><td>Water: {{ entries[count].water }}</td></tr>
-								<tr><td>Light: {{ entries[count].light_intensity }}</td></tr>
+							<table class="table table-condensed table-hover parameters">
+								<tr><td>Water:{{ entries[count].current_water }}/{{ entries[count].set_water }}</td></tr>
+								<tr><td>Light: {{ entries[count].current_light }}/{{ entries[count].set_light }}</td></tr>
 							</table>
-							<p><a href="/delete/3">Remove Plant</a></p>
+							<form action="/update" method="post" class="form">
+								<input type="hidden" name="id" value="3">
+								<div class="form-row">Water: {{ entries[count].current_water }} /<input type="text" name="set_water" value="{{ entries[count].set_water }}"></div>
+								<div class="form-row"><br>Light: {{ entries[count].current_light }}/<input type="text" name="set_light" value="{{ entries[count].set_light }}"></div>
+								<br><input type="submit" value="Update!">
+							</form>
+							<p><a href="#" class="modify">Modify Settings</a></p>
+							<p><a href="/delete/0">Remove Plant</a></p>
 						</div>
 					</div>
 					{% set count = count + 1%}
@@ -246,25 +267,27 @@
 					<div class="row">
 						<div class="col-xs-4">
 							<table class="table table-condensed table-hover">
-								<tr><td>Tomatoes</td></tr>
-								<tr><td>Leeks</td></tr>
-								<tr><td>Potatoes</td></tr>
-								<tr><td>Zuccini</td></tr>
+							{% set count = 0 %}
+								<tr><td>{% if ((entries[count] is defined)) %} {{ entries[count].plant.title().title() }} {% set count = count+1 %} {% endif %}</td></tr>
+								<tr><td>{% if ((entries[count] is defined)) %} {{ entries[count].plant.title().title() }} {% set count = count+1 %} {% endif %}</td></tr>
+								<tr><td>{% if ((entries[count] is defined)) %} {{ entries[count].plant.title().title() }} {% set count = count+1 %} {% endif %}</td></tr>
+								<tr><td>{% if ((entries[count] is defined)) %} {{ entries[count].plant.title().title() }} {% set count = count+1 %} {% endif %}</td></tr>
 							</table>
 						</div>
 						<!--- Lights On -->
 						<div class="col-xs-4">
 							<table class="table table-condensed table-hover">
-								<tr><td><input type="checkbox" disabled="disabled" checked="checked"></td><td>Tomatoes</td></tr>
-								<tr><td><input type="checkbox"></td><td>Leeks</td></tr>
-								<tr><td><input type="checkbox"></td><td>Potatoes</td></tr>
-								<tr><td><input type="checkbox"></td><td>Zuccini</td></tr>
+							{% set count = 0 %}
+								<tr><td><input type="checkbox" disabled="disabled" {% if ((entries[count] is defined) and (entries[count].light_on)) %} checked="checked" {% endif %}></td><td>{% if (entries[count] is defined) %} {{ entries[count].plant.title().title() }} {% set count = count + 1 %} {% endif %}</td></tr>
+								<tr><td><input type="checkbox" disabled="disabled" {% if ((entries[count] is defined) and (entries[count].light_on)) %} checked="checked" {% endif %}></td><td>{% if (entries[count] is defined) %} {{ entries[count].plant.title().title() }} {% set count = count + 1 %} {% endif %}</td></tr>
+								<tr><td><input type="checkbox" disabled="disabled" {% if ((entries[count] is defined) and (entries[count].light_on)) %} checked="checked" {% endif %}></td><td>{% if (entries[count] is defined) %} {{ entries[count].plant.title().title() }} {% set count = count + 1 %} {% endif %}</td></tr>
+								<tr><td><input type="checkbox" disabled="disabled" {% if ((entries[count] is defined) and (entries[count].light_on)) %} checked="checked" {% endif %}></td><td>{% if (entries[count] is defined) %} {{ entries[count].plant.title().title() }} {% set count = count + 1 %} {% endif %}</td></tr>
 							</table>
 						</div>
 						<!-- Current Specs -->
 						<div class="col-xs-4">
 							<div class="row">
-								<div class="col-xs-12">Current Temp: {{count}}</div>
+								<div class="col-xs-12">Current Temp:</div>
 							</div>
 							<div class="row">
 								<div class="col-xs-12">Current Humidity: </div>
