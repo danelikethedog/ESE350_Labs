@@ -86,6 +86,8 @@ def html_dev():
 	
 @app.route('/plant', methods=['POST'])
 def add_plant():
+	if not session.get('logged_in'):
+		abort(401)
 	db = get_db()
 	db.execute('insert into entries(id, plant) values (?,?)', [request.form['id'], request.form['plant']])
 	db.commit()
@@ -102,13 +104,33 @@ def add_entry():
 
 @app.route('/delete/<id>')
 def delete_plant(id):
+	if not session.get('logged_in'):
+		abort(401)
 	db = get_db()
 	cur = db.execute('delete from entries where id=?', id)
 	db.commit()
 	return redirect(url_for('html_dev'))
+	
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != app.config['USERNAME']:
+            error = 'Invalid username'
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('html_dev'))
+    return render_template('login.html', error=error)
+
+
 
 @app.route('/update', methods=['POST'])
 def update_plant():
+	if not session.get('logged_in'):
+		abort(401)
 	db = get_db()
 	db.execute('update entries set set_water=?, set_light=? where id=?', [request.form['set_water'],request.form['set_light'],request.form['id']])
 	db.commit()
