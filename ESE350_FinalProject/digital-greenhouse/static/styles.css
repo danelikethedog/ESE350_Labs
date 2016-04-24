@@ -36,6 +36,10 @@
 	top:-3em;
 }
 
+.form {
+	display: none;
+}
+
 #visualizer {
 	
 	width:75%;
@@ -46,4 +50,7 @@ img {
 	
 	width: 60%;
 	
+}
+.form>input {
+	width:95%;
 }

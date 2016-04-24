@@ -71,7 +71,7 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select id, plant, temperature, water, light_intensity from entries order by id')
+    cur = db.execute('select id, plant, set_temperature, set_water, set_light from entries order by id')
     entries = cur.fetchall()
     while(len(entries) < 4):
 	    entries.append(None)
@@ -94,11 +94,18 @@ def add_plant():
 @app.route('/add', methods=['POST'])
 def add_entry():
     db = get_db()
-    db.execute('insert into entries (plant, temperature, water, light_intensity) values (?, ?, ?, ?)',
-               [request.form['plant'], request.form['temperature'], request.form['water'], request.form['light_intensity']])
+    db.execute('insert into entries (plant, set_temperature, set_water, set_light) values (?, ?, ?, ?)',
+               [request.form['plant'], request.form['set_temperature'], request.form['set_water'], request.form['set_light']])
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
+
+@app.route('/delete/<id>')
+def delete_plant(id):
+	db = get_db()
+	cur = db.execute('delete from entries where id=?', id)
+	db.commit()
+	return redirect(url_for('html_dev'))
 
 if __name__ == '__main__':
 	app.run()

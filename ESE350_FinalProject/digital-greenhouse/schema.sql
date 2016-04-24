@@ -2,8 +2,12 @@ drop table if exists entries;
 create table entries (
   id integer primary key,
   plant text not null,
-  temperature integer,
+  current_temperature integer,
   light_on boolean,
-  water integer,
-  light_intensity integer
+  current_water integer,
+  current_light integer, --light intensity
+  set_temperature integer,
+  set_water integer,
+  set_light integer
+  
 );
