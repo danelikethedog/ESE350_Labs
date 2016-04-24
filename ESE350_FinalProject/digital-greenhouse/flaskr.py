@@ -80,7 +80,7 @@ def show_entries():
 @app.route('/test')
 def html_dev():
 	db = get_db()
-	cur = db.execute('select id, plant from entries order by id')
+	cur = db.execute('select id, plant, current_water, current_light, set_water, set_light from entries order by id')
 	plants = cur.fetchall()
 	return render_template('index-new.html', entries=plants)
 	
@@ -107,5 +107,11 @@ def delete_plant(id):
 	db.commit()
 	return redirect(url_for('html_dev'))
 
+@app.route('/update', methods=['POST'])
+def update_plant():
+	db = get_db()
+	db.execute('update entries set set_water=?, set_light=? where id=?', [request.form['set_water'],request.form['set_light'],request.form['id']])
+	db.commit()
+	return redirect(url_for('html_dev'))
 if __name__ == '__main__':
 	app.run()
