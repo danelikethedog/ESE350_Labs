@@ -1,0 +1,119 @@
+//Source: http://www.gardening.cornell.edu/homegardening/sceneb771.html
+//http://content.ces.ncsu.edu/growing-herbs-for-the-home-gardener
+//http://gardening.cce.cornell.edu/
+
+
+
+
+{
+	"cabbage": {
+		"minT": 60,
+		"maxT": 65,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": 100,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 12
+	},
+	"bean": {
+		"minT": 70,
+		"maxT": 80,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 4
+	},
+	"lettuce": {
+		"minT": 55,
+		"maxT": 80,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 6
+	},
+	"tomato": {
+		"minT": 70,
+		"maxT": 90,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 12
+	},
+	"strawberry": {
+		"minT": 60,
+		"maxT": 85,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 6
+	},
+	"carrot": {
+		"minT": 55,
+		"maxT": 80,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 3
+	},
+	"radish": {
+		"minT": 60,
+		"maxT": 80,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 4
+	},
+	"basil": {
+		"minT": 65,
+		"maxT": 85,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 12
+	},
+	"chives": {
+		"minT": 45,
+		"maxT": 95,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 12
+	},
+	"mint": {
+		"minT": 60,
+		"maxT": 75,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 15
+	},
+	"parsley": {
+		"minT": 60,
+		"maxT": 77,
+		"hum": ,
+		"lightDuration": ,
+		"lightIntensity": ,
+		"soilWaterMin": ,
+		"soilWaterMax": ,
+		"spread": 6
+	}
+}
