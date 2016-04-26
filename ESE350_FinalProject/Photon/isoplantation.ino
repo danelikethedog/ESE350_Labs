@@ -124,8 +124,8 @@ void sendDashWebhook() {
 
 void sendPlantWebhook() {
     char json[63];
-    sprintf(json, "{\"1\": %i, \"2\": %i, \"3\": %i, \"4\": %i}", 
-                                                *quadOne.ID, *quadTwo.ID, *quadThree.ID, *quadFour.ID);
+    sprintf(json, "{\"I\": %i, \"II\": %i, \"III\": %i, \"IV\": %i}", 
+                                                (*quadOne).ID, (*quadTwo).ID, (*quadThree).ID, (*quadFour).ID);
     Particle.publish("plants", json);
 }
 
