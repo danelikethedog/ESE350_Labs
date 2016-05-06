@@ -12,7 +12,7 @@
 		"hum": ,
 		"lightDuration": ,
 		"lightIntensity": 100,
-		"soilWaterMin": ,
+		"soilWaterMin": ,1.5inches/week
 		"soilWaterMax": ,
 		"spread": 12
 	},
