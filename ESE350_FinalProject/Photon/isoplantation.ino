@@ -90,9 +90,8 @@ void setup() {
     //Publish Functions
     
     Particle.function("setLights", setLights);
-    /*Particle.function("setWater1", setValveOne);
-    Particle.function("setWater2", setValveTwo);
-    Particle.function("setWater3", setValveThree); */
+    Particle.function("setWater", setValve)
+    Particle.function("setFan", setFan);
 
     //Begin DHT Humidity Sensor and Set Plants
     dht1.begin();
@@ -246,21 +245,49 @@ void updateValues() {
 
 
 
-void setFan(int io) {
+int setFan(String io) {
+    char inIO = io[0];
     if (io) {
         digitalWrite(powerSwitchThree, HIGH);
     } else {
         digitalWrite(powerSwitchThree, LOW);
     }
+    return 1;
 }
 
 int setLights(String io) {
+    char inIO = io[0];
     if (io) {
         digitalWrite(powerSwitchOne, HIGH);
     } else {
         digitalWrite(powerSwitchOne, LOW);
     }
     return 1;
+}
+
+int setValve(String chooseValve) {
+    char cValve = char[0];
+    char iO = char[1];
+    switch(cValve) {
+        case '1':
+            if (iO == '1') {
+                setValveOne(1);
+            } else {
+                setValveOne(0);
+            }
+        case '2':
+            if (iO == '1') {
+                setValveTwo(1);
+            } else {
+                setValveTwo(0);
+            }
+        case '3':
+            if (iO == '1') {
+                setValveThree(1);
+            } else {
+                setValveThree(0);
+            }
+    }
 }
 
 void setValveOne(int io) {
