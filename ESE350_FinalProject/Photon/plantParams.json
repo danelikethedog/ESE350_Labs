@@ -1,117 +1,124 @@
 //Source: http://www.gardening.cornell.edu/homegardening/sceneb771.html
 //http://content.ces.ncsu.edu/growing-herbs-for-the-home-gardener
 //http://gardening.cce.cornell.edu/
-
-
-
+//http://www2.ca.uky.edu/agcollege/plantpathology/ext_files/PPFShtml/PPFS-GH-1.pdf
+//http://www.rodalesorganiclife.com/garden/tending-greenhouse
+//Over most temperature ranges, a GH humidity of 
+	//50-85% is generally safe.
 
 {
 	"cabbage": {
+		"ID": 1,
 		"minT": 60,
 		"maxT": 65,
 		"hum": ,
+<<<<<<< HEAD
 		"lightDuration": ,
 		"lightIntensity": 100,
 		"soilWaterMin": ,1.5inches/week
+=======
+		"lightMinTime": 4,
+		"soilWaterMin": ,
+>>>>>>> origin/master
 		"soilWaterMax": ,
 		"spread": 12
 	},
 	"bean": {
+		"ID": 2,
 		"minT": 70,
 		"maxT": 80,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 10,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 4
 	},
 	"lettuce": {
+		"ID": 3,
 		"minT": 55,
 		"maxT": 80,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 4,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 6
 	},
 	"tomato": {
+		"ID": 4,
 		"minT": 70,
 		"maxT": 90,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 10,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 12
 	},
 	"strawberry": {
+		"ID": 5,
 		"minT": 60,
 		"maxT": 85,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 6,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 6
 	},
 	"carrot": {
+		"ID": 6,
 		"minT": 55,
 		"maxT": 80,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 8,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 3
 	},
 	"radish": {
+		"ID": 7,
 		"minT": 60,
 		"maxT": 80,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 8,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 4
 	},
 	"basil": {
+		"ID": 8,
 		"minT": 65,
 		"maxT": 85,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 6,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 12
 	},
 	"chives": {
+		"ID": 9,
 		"minT": 45,
 		"maxT": 95,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 6,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 12
 	},
 	"mint": {
+		"ID": 10,
 		"minT": 60,
 		"maxT": 75,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 6,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 15
 	},
 	"parsley": {
+		"ID": 11,
 		"minT": 60,
 		"maxT": 77,
 		"hum": ,
-		"lightDuration": ,
-		"lightIntensity": ,
+		"lightMinTime": 6,
 		"soilWaterMin": ,
 		"soilWaterMax": ,
 		"spread": 6
