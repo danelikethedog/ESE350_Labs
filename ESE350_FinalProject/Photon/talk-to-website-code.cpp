@@ -26,7 +26,6 @@ void setup() {
     request.port = 80;
     request.path = "/api/get/plants";
     http.get(request, response, headers);
-    
 }
 
 /**
@@ -59,16 +58,18 @@ void set_ambient(int current_humidity, int current_temperature) {
     http.get(request,response, headers);
 }
 
-JsonObject& makeJSONParser(char* json) {
-    StaticJsonBuffer<3500> jsonBuffer;
-    return jsonBuffer.parseObject(json);
+JsonObject& makeJSONParser(String json) {
+    char jsontest[1500];
+    strcpy(jsontest, json.c_str()); //convert from const
+    StaticJsonBuffer<1500> jsonBuffer;
+    return jsonBuffer.parseObject(jsontest);
 }
 
 
 void loop() {
-    char jsontest[3500];
-    strcpy(jsontest, response.body.c_str()); //convert from const
-    JsonObject& root = makeJSONParser(jsontest);
+   JsonObject& root = makeJSONParser(response.body);
+   test = root["0"][0]["plant"];
+   Serial.print(test);
 
     delay(10000);
 
