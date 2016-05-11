@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/particle-api-js/5/particle.min.js">
+</script>
+
+<script>
+	var particle = new Particle();
+	
+	var dId = '340034000447343339373536';
+	var authCode = '0c4268922dee4bce50a65a3535a75df7b2dd55c1';
+	
+	var lightState = 0;
+	var valveOneState = 0;
+	var valveTwoState = 0;
+	var valveThreeState = 0;
+	var fanState = 0;
+	
+	particle.login({username: 'dwalton@seas.upenn.edu', password: 'Golfkid02'}).then(
+	function(data){
+      console.log('API call completed on promise resolve: ', data.body.access_token);
+      },
+     function(err) {
+      console.log('API call completed on promise fail: ', err);
+     }
+    );
+	
+	$(document).ready(function() {
+		$('#lights').click(function() {
+			var lightArg = "0"
+			if(lightState) {
+				lightState = 0;
+				var lightArg = "0";
+			} else {
+				lightState = 1;
+				var lightArg = "1";
+			}
+			particle.callFunction({ deviceId: dId, name: 'setLights', argument: lightArg,auth:authCode})
+		});
+		
+		$('#fan').click(function() {
+			var fanArg = "0"
+			if(fanState) {
+				fanState = 0;
+				fanArg = "0";
+			} else {
+				fanState = 1;
+				fanArg = "1";
+			}
+			particle.callFunction({ deviceId: dId, name: 'setFan', argument: fanArg,auth:authCode})
+		});
+		
+		$('#waterOne').click(function() {
+			var waterOneArg = "0"
+				if(valveOneState) {
+					valveOneState = 0;
+					waterOneArg = "10";
+				} else {
+					valveOneState = 1;
+					waterOneArg = "11";
+				}
+			particle.callFunction({ deviceId: dId, name: 'setWater', argument: waterOneArg, auth:authCode})
+		});
+		
+		
+		$('#waterTwo').click(function() {
+			var waterTwoArg = "0"
+				if(valveTwoState) {
+					valveTwoState = 0;
+					waterTwoArg = "20";
+				} else {
+					valveTwoState = 1;
+					waterTwoArg = "21";
+				}
+			particle.callFunction({ deviceId: dId, name: 'setWater', argument: waterTwoArg, auth:authCode})
+		});
+		
+		$('#waterThree').click(function() {
+			var waterThreeArg = "0"
+				if(valveThreeState) {
+					valveThreeState = 0;
+					var waterThreeArg = "30";
+				} else {
+					valveThreeState = 1;
+					var waterThreeArg = "31";
+				}
+			particle.callFunction({ deviceId: dId, name: 'setWater', argument: waterThreeArg,auth:authCode})
+		});
+	});
+	
+</script>
+</head>
+<body>
+
+	<button id="lights">Toggle Lights!</button>
+	<button id="fan">Toggle Fan!</button>
+	<button id="waterOne">Toggle Water One!</button>
+	<button id="waterTwo">Toggle Water Two!</button>
+	<button id="waterThree">Toggle Water Three!</button>
+
+</body>
